@@ -1,0 +1,74 @@
+=== NEWS ===
+Seventeen people have been injured after the wagon of a tourist train overturned in the Spanish town of Cártama.
+
+The accident happened just after 21:30 local time (20:30 BST) on Saturday evening, according to local authorities. The cause is unknown.
+
+Emergency teams attended to the injured at the scene and four were later evacuated to a nearby hospital, including three children. None of the victims suffered serious injuries, local authorities said.
+
+The free train ride was part of an annual event called la Ruta de la Tapa y el Cóctel, where people are encouraged to visit different local businesses to try their food and drink offerings.
+
+The road train was carrying carrying around 30 passengers at the time of the incident.
+
+=== SCIENCE ===
+A neural network is a group of interconnected units called neurons that send signals to one another. Neurons can be either biological cells or mathematical models . While individual neurons are simple, many of them together in a network can perform complex tasks. There are two main types of neural networks.
+
+• In neuroscience , a biological neural network is a physical structure found in brains and complex nervous systems – a population of nerve cells connected by synapses .
+
+• In machine learning , an artificial neural network is a mathematical model used to approximate nonlinear functions . Artificial neural networks are used to solve artificial intelligence problems.
+
+In neuroscience, behavior and cognition arise from interactions between distributed brain regions. In computer science, artificial neural networks power many modern AI systems, but require large datasets and substantial computing power. Additionally, their internal representations are difficult to interpret.
+
+In the context of biology, a neural network is a population of biological neurons chemically connected to each other by synapses . A given neuron can be connected to hundreds of thousands of synapses. [ 1 ] Each neuron sends and receives electrochemical signals called action potentials to its connected neighbors. A neuron can serve an excitatory role, amplifying and propagating signals it receives, or an inhibitory role, suppressing signals instead. [ 1 ]
+
+=== DIALOGUE ===
+INCEPTION
+Written by
+Christopher Nolan
+SHOOTING SCRIPT
+FADE IN:
+DAWN. CRASHING SURF.
+The waves TOSS a BEARDED MAN onto wet sand. He lies there.
+A CHILD'S SHOUT makes him LIFT his head to see: a LITTLE
+BLONDE BOY crouching, back towards us, watching the tide eat
+a SANDCASTLE. A LITTLE BLONDE GIRL joins the boy. The Bearded
+Man tries to call them, but they RUN OFF, FACES UNSEEN. He
+COLLAPSES.
+The barrel of a rifle ROLLS the Bearded Man onto his back. A
+JAPANESE SECURITY GUARD looks down at him, then calls up the
+beach to a colleague leaning against a JEEP. Behind them is a
+cliff, and on top of that, a JAPANESE CASTLE.
+INT. ELEGANT DINING ROOM, JAPANESE CASTLE - LATER
+The Security Guard waits as an ATTENDANT speaks to an ELDERLY
+JAPANESE MAN sitting at the dining table, back to us.
+ATTENDANT
+(in Japanese)
+He was delirious. But he asked for
+you by name. And...
+(to the Security Guard)
+Show him.
+SECURITY GUARD
+(in Japanese)
+He was carrying nothing but this...
+He puts a HANDGUN on the table. The Elderly Man keeps eating.
+SECURITY GUARD
+...and this.
+The Security Guard places a SMALL PEWTER CONE alongside the
+gun. The Elderly Man STOPS eating. Picks up the cone.
+ELDERLY JAPANESE MAN
+(in Japanese)
+Bring him here. And some food.
+INT. SAME - MOMENTS LATER
+The Elderly Man watches the Bearded Man WOLF down his food.
+He SLIDES the handgun down the table towards him.
+ELDERLY JAPANESE MAN
+(in English)
+Are you here to kill me?
+The Bearded Man glances up at him, then back to his food.
+2.
+The Elderly Japanese Man picks up the cone between thumb and
+forefinger.
+ELDERLY JAPANESE MAN
+I know what this is.
+He SPINS it onto a table- it CIRCLES gracefully across the
+polished ebony... a SPINNING TOP.
+
