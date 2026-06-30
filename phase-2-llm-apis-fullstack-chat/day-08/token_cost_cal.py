@@ -23,6 +23,8 @@ input_cost = (input_tokens / 1_000_000) * INPUT_PRICE_PER_MILLION
 output_cost = (output_tokens / 1_000_000) * OUTPUT_PRICE_PER_MILLION
 total_cost = input_cost + output_cost
 
+print("=== Token metrics & cost calculation ===")
+
 print(f"Input tokens:  {input_tokens}  -> ${input_cost:.8f}")
 print(f"Output tokens: {output_tokens}  -> ${output_cost:.8f}")
 print(f"Total tokens:  {total_tokens}  -> ${total_cost:.8f}")
