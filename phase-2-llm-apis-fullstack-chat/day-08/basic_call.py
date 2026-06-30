@@ -19,5 +19,5 @@ print("--- RESPONSE TEXT ---")
 print(response.text)
 
 # Print the full raw response object so we can see its actual structure
-print("\n--- FULL RAW RESPONSE OBJECT ---")
+print("\n=== FULL RAW RESPONSE OBJECT ===")
 print(response)
