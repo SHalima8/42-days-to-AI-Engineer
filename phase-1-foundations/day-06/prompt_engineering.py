@@ -41,7 +41,7 @@ Confidence: [High/Medium/Low]
 Reason: [One sentence explanation]
 
 ---
-Review to analyze: "The quality is okay but delivery took forever." and this "It is a very bad product. I want my money back."
+Review to analyze: "The quality is okay but delivery took forever." and this "is a very bad product. I want my money back."
 """
 
 call_llm(anatomy_prompt, "DELIVERABLE 1 - Full Prompt Anatomy (All 5 Components)")

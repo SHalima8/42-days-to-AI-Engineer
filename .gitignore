@@ -1,5 +1,7 @@
 # Virtual environment
 nlp_env/
+Day_2/nlp_env/
+
 
 # Python cache
 __pycache__/
@@ -14,3 +16,5 @@ __pycache__/
 # OS files
 .DS_Store
 Thumbs.db
+
+.env
