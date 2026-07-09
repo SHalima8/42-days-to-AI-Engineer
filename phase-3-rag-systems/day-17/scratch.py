@@ -1,6 +1,9 @@
-# run this from inside day-17/, e.g. in a scratch.py file or python shell
 from embeddings.embedder_factory import get_embedder
 
-e = get_embedder("minilm")
-vec = e.embed_query("what is the refund policy?")
-print(len(vec))  # expect 384
+e_mpnet = get_embedder("mpnet")
+vec_mpnet = e_mpnet.embed_query("what is the refund policy?")
+print("mpnet:", len(vec_mpnet))   # expect 768
+
+e_bge = get_embedder("bge")
+vec_bge = e_bge.embed_query("what is the refund policy?")
+print("bge:", len(vec_bge))       # expect 1024
