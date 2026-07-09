@@ -1,0 +1,274 @@
+[
+  {
+    "text": "Multilingual Speech Pipeline: Deployment Notes\n\nInternal engineering reference covering ingestion, model evaluation, infrastructure, and deployment considerations for low-resource ASR and TTS pipelines across Urdu, Pashto, and Punjabi. This document is maintained by the speech platform team and updated after each quarterly model refresh.\n\n1.Overview\n\nThis document summarizes the current state of the multilingual speech pipeline, including data collection practices, model architecture choices, infrastructure configuration, and known failure modes across supported languages. It is intended as a living reference for engineers onboarding onto the speech team, and as a record of decisions made during the current model generation.\n\nThe pipeline processes raw audio through a shared front-end feature extractor before branching into languagespecific acoustic models. Text normalization and tokenization are handled separately for each language due to differing orthographic conventions, script variants, and dialectal spelling inconsistencies across data sources.\n\nThree languages are currently in production: Urdu, Pashto, and Punjabi. A fourth language, Sind",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 0,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        1
+      ],
+      "section_headings": [],
+      "char_count": 1163,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "are currently in production: Urdu, Pashto, and Punjabi. A fourth language, Sindhi, is in early data collection and is not covered in this document.\n\n2. Data Ingestion\n\n2.1 Audio Collection\n\nAudio data is sourced from three channels: crowd-sourced recordings, licensed broadcast archives, and synthetic eg a o   a o a a rd  a  o a one segmented by data origin, which has proven useful for tracing quality regressions back to a specific batch.\n\nCrowd-sourced recordings undergo automatic quality filtering based on signal-to-noise ratio and clipping detection before being queued for manual review. Roughly 30% of submitted crowd-sourced audio is rejected at this stage, most commonly due to background noise exceeding the configured threshold.\n\nLicensed broadcast archives provide higher average audio quality but skew toward formal, scripted speech, which limits their usefulness for training conversational robustness. The team is actively working to balance the training mix toward a higher proportion",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 1,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        1
+      ],
+      "section_headings": [],
+      "char_count": 1003,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "training conversational robustness. The team is actively working to balance the training mix toward a higher proportion of informal speech.\n\n2.2 Text Corpus Preparation\n\nText corpora are normalized using language-specific rules. Urdu and Pashto both require handling of the PersoArabic script's contextual letter shaping, while Punjabi ingestion must support both Gurmukhi and Shahmukhi scripts depending on source region.\n\nStrip non-standard diacritics inconsistently applied by different data sources\n\nNormalize digit representations (Eastern Arabic-Indic vs. Western Arabic numerals)\n\nSegment sentences using script-aware boundary detection rather than Latin punctuation heuristics\n\nFlag and quarantine mixed-script lines for manual review before inclusion in training data\n\n2.3 Metadata Schema\n\nEvery ingested utterance is stored with a consistent metadata record so that downstream training and evaluation code can filter and stratify samples without re-parsing raw files. The following fields are considered required, not optional, for any sample entering the",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 2,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        1,
+        2
+      ],
+      "section_headings": [],
+      "char_count": 1065,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "-parsing raw files. The following fields are considered required, not optional, for any sample entering the training pipeline:\n\nsource_channel — crowd-sourced, broadcast, or synthetic\n\nscript_variant — for Punjabi specifically, Gurmukhi or Shahmukhi\n\nlanguage_code — ISO 639-3 plus an internal dialect tag where applicable\n\nqc_status — passed, flagged, or rejected, with a reason code\n\nrecording_date and ingestion_date — kept separate since batches are sometimes ingested well after recording\n\n3. Model Architecture\n\n3.1 Shared Front End\n\nAll three languages share a single front-end feature extractor, trained jointly on the combined multilingual corpus. This was a deliberate choice to allow low-resource languages like Pashto to benefit from acoustic patterns learned primarily from the larger Urdu dataset, under the hypothesis that low-level acoustic features transfer reasonably well across related languages even when higher-level phonology differs.\n\nEmpirically, this transfer has held up reasonably well for Pasht",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 3,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        2
+      ],
+      "section_headings": [],
+      "char_count": 1023,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "-level phonology differs.\n\nEmpirically, this transfer has held up reasonably well for Pashto but less so for Punjabi, where tonal distinctions not present in Urdu or Pashto appear to be partially lost in the shared representation. This is an open area of investigation for the next model generation.\n\n3.2 Language-Specific Branches\n\nAfter the shared front end, each language routes to its own acoustic model, fine-tuned independently. This branching point was chosen empirically by comparing WER across several candidate architectures where the split occurred earlier or later in the network; splitting immediately after the front end gave the best balance between shared representation benefit and language-specific specialization.\n\n4. Model Evaluation\n\nEvaluation is conducted per-language using held-out test sets that are refreshed quarterly to avoid overfitting to a static benchmark. Automatic Speech Recognition (ASR) is scored using Word Error Rate (WER), while Text-toSpeech (TTS) output is scored using Mean Opinion Score (",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 4,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        2
+      ],
+      "section_headings": [],
+      "char_count": 1033,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "Rate (WER), while Text-toSpeech (TTS) output is scored using Mean Opinion Score (MOS) from human raters on a 1-5 scale.\n\nTable 4.1: ASR and TTS Evaluation Metrics by Language Language ASR WER (%)\n\nPunjabi 18.3 3.9 210 Pashto currently shows the highest WER of the three supported languages, which the team attributes to limited training hours relative to Urdu and greater dialectal variation across regions. Punjabi sits between the two, likely reflecting its larger but still comparatively modest training set.\n\n[Table — see table registry, id: scanned_document_table_0000]\n\n4.1 Error Breakdown\n\nBeyond aggregate WER, the team tracks a breakdown of error types to understand where model improvements should be targeted. Substitution errors dominate for both Urdu and Pashto, but the gap between the two languages is largest in this category, consistent with Pashto",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 5,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        2
+      ],
+      "section_headings": [],
+      "char_count": 865,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "o, but the gap between the two languages is largest in this category, consistent with Pashto's greater dialectal pronunciation variance.\n\nTable 4.2: Error Type Breakdown for Urdu and Pashto Error Type Urdu %\n\n[Table 4.2 — see table registry, id: scanned_document_table_0001]\n\n[Table 4.2 — see table registry, id: scanned_document_table_0002]\n\n4.2 Human Evaluation Protocol\n\nMOS scores are collected from a pool of at least twelve native-speaker raters per language, with each sample rated by a minimum of three raters and outlier scores (more than two standard deviations from the sample mean) discarded before averaging. Raters are shown the synthesized audio alongside the source text and asked to rate naturalness on a 1-5 scale without being told which system produced the sample.\n\n5. Infrastructure\n\n5.1 Serving Configuration\n\nThe production pipeline is deployed as a set of",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 6,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        2,
+        3
+      ],
+      "section_headings": [],
+      "char_count": 879,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "5. Infrastructure\n\n5.1 Serving Configuration\n\nThe production pipeline is deployed as a set of independently scalable services, allowing the team to allocate GPU capacity toward whichever language is experiencing higher load without over-provisioning the others. The current reference configuration is summarized below.\n\n[Table — see table registry, id: scanned_document_table_0003]\n\nTable 5.1: Reference Serving Configuration\n\n5.2 Latency Targets\n\nProduction deployment targets end-to-end latency under 800ms for streaming ASR and under 1.2s for TTS synthesis of a single sentence. These targets are measured on the reference inference server configuration documented above, under a simulated load of 50 concurrent requests per language.\n\n5.3 Fallback Behavior\n\nWhen confidence scores fall below the configured threshold, the pipeline falls back to a smaller, faster model rather than failing the request outright. This trades some accuracy for reliability under load, and the threshold is tuned separately per language based on observed confidence",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 7,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        3
+      ],
+      "section_headings": [],
+      "char_count": 1048,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "trades some accuracy for reliability under load, and the threshold is tuned separately per language based on observed confidence calibration, since the three acoustic models are not equally well calibrated against their own confidence outputs.\n\n6. Known Limitations\n\n6.1 Code-Switching\n\nCode-switching between Urdu and English within a single utterance remains a significant source of errors, particularly in informal speech. The current tokenizer does not reliably detect script boundaries mid-utterance, which can cause both ASR misrecognition and unnatural TTS prosody at the switch point.\n\nFurther work is planned to address this through a dedicated code-switch detection module ahead of the languagespecific branching stage. A prototype using audio-level prosodic cues, rather than text-level script detection, is currently under evaluation.\n\n6.2 Script Ambiguity in Punjabi\n\nPunjabi source material arrives in both Gurmukhi and Shahmukhi script depending on regional origin, and a nontrivial fraction of crowd-sourced",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 8,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        3,
+        4
+      ],
+      "section_headings": [],
+      "char_count": 1023,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "Shahmukhi script depending on regional origin, and a nontrivial fraction of crowd-sourced text data mixes the two within a single document, which complicates both training data preparation and evaluation set construction.\n\n6.3 Dialect Coverage Gaps\n\nCurrent training data for Pashto skews toward a small number of regional dialects overrepresented in available broadcast archives. Speakers from underrepresented dialect regions report noticeably higher error rates in informal user feedback, though this has not yet been quantified through a structured evaluation.\n\n7. Training Pipeline\n\n7.1 Data Splitting Strategy\n\nTraining, validation, and test splits are constructed at the speaker level rather than the utterance level, meaning no speaker appears in more than one split. This was adopted after an earlier utterance-level split was found to substantially overestimate held-out performance, since the model could partially memorize speaker-specific acoustic characteristics rather than generalizing across speakers.\n\nSpeaker-level splitting is straightforward for crowd-sourced and broadcast data",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 9,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        4
+      ],
+      "section_headings": [],
+      "char_count": 1099,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "rather than generalizing across speakers.\n\nSpeaker-level splitting is straightforward for crowd-sourced and broadcast data, where speaker identity is known, but is not always possible for synthetic augmentation samples, which are excluded from the test split entirely as a precaution.\n\n7.2 Curriculum and Fine-Tuning Order\n\nThe shared front end is pretrained first on the full multilingual corpus before any language-specific fine-tuning begins. Language branches are then fine-tuned in a fixed order: Urdu first, given its larger dataset and role as the primary transfer source, followed by Punjabi, then Pashto.\n\nThis ordering was chosen empirically; fine-tuning Pashto before Urdu was tested and found to degrade Urdu performance more than the reverse ordering degraded Pashto, likely because Urdu's larger dataset makes it more resistant to catastrophic forgetting during sequential fine-tuning.\n\n7.3 Augmentation\n\nSynthetic augmentation is used primarily to address dialect and noise-condition gaps in the natural data rather than to increase",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 10,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        4
+      ],
+      "section_headings": [],
+      "char_count": 1047,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "thetic augmentation is used primarily to address dialect and noise-condition gaps in the natural data rather than to increase raw volume. Current augmentation techniques in use include:\n\nSpeed and pitch perturbation within a range validated to preserve intelligibility\n\nBackground noise injection sampled from a library of real-world recording environments\n\nText-to-speech round-tripping for underrepresented dialect regions, used cautiously given the risk of reinforcing the TTS model's own biases back into the ASR training set\n\n8. Monitoring and Alerting\n\n8.1 Production Metrics\n\nEach language pipeline reports latency, error rate proxies (via confidence score distributions, since ground-truth WER is not available on live traffic), and request volume to the shared monitoring dashboard. Alerts are configured per language rather than globally, since the three languages have different baseline confidence distributions and a shared threshold would either be too sensitive for one language or too lax for another.\n\n8.2 Drift Detection\n\nA weekly job compares the confidence score distribution of live traffic against a",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 11,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        4,
+        5
+      ],
+      "section_headings": [],
+      "char_count": 1121,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "8.2 Drift Detection\n\nA weekly job compares the confidence score distribution of live traffic against a reference distribution captured at the time of the last model deployment. A significant leftward shift, indicating the model is less confident on average, triggers a review, since this has historically preceded user-reported quality regressions by one to two weeks in past incidents.\n\nThis drift detection approach is intentionally conservative and produces some false positives, which the team considers an acceptable tradeoff given the cost of an undetected quality regression reaching a large fraction of production traffic before being caught.\n\nIncident History\n\nThis section summarizes notable production incidents for institutional memory. Full postmortems are linked in the internal incident tracker; this document retains only a brief summary of cause and resolution.\n\n9.1 Punjabi Script Misdetection (Q1)\n\nA batch of Shahmukhi-script Punjabi data was incorrectly tagged as Gurmukhi during an automated ingestion run following a change to the source data provider's",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 12,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        4,
+        5
+      ],
+      "section_headings": [],
+      "char_count": 1076,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "tagged as Gurmukhi during an automated ingestion run following a change to the source data provider's file naming convention, which the script-detection heuristic relied on. This caused a measurable quality regression in Punjabi TTS output for roughly one week before being caught by the drift detection system described in Section 8.2.\n\nThe resolution included both a fix to the ingestion tagging logic and a move away from relying on file naming con scnet ct  t    e-    ca s  t sssl source metadata.\n\n9.2 Latency Regression from Shared Front-End Update (Q2)\n\nAn update to the shared front-end feature extractor, intended to improve the Punjabi tonal transfer issue described in Section 3.1, incidentally increased front-end inference time by roughly 35%, pushing Urdu end-to-end latency above the 800ms target under peak load.\n\nThis was resolved by moving the updated front end to a larger instance type rather than reverting the model",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 13,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        5
+      ],
+      "section_headings": [],
+      "char_count": 938,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "This was resolved by moving the updated front end to a larger instance type rather than reverting the model change, since the underlying accuracy improvement was considered worth the added infrastructure cost.\n\nRoadmap\n\nThe following items are planned for the next two quarters, in approximate priority order:\n\nShip the audio-level code-switch detection prototype to a shadow deployment for offline evaluation against production traffic 2. Expand Pashto dialect coverage through a targeted crowd-sourcing campaign in underrepresented regions 3. Begin early data collection for Sindhi to support a future fourth production language 4. Re-evaluate the shared front-end architecture given the tonal transfer gap observed for Punjabi 5. Move content-based script detection upstream of all ingestion paths, closing the gap identified in the Q1 incident 6. Investigate whether speaker-level splitting should be extended to a stricter household-level or region-level split for crowd-sourced data Progress against this roadmap is reviewed at the end of each quarter alongside the refreshed evaluation benchmarks described in",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 14,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        5
+      ],
+      "section_headings": [],
+      "char_count": 1116,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "data Progress against this roadmap is reviewed at the end of each quarter alongside the refreshed evaluation benchmarks described in Section 4.\n\n11. Data Privacy and Compliance\n\n11.1 Consent and Retention\n\nCrowd-sourced audio contributors provide explicit consent at collection time covering both model training use and internal quality review by human raters. Consent records are stored separately from the audio data itself and are checked programmatically before any batch is admitted into the training pipeline, rather than being assumed valid based on the source channel alone.\n\nRaw audio is retained for a maximum of eighteen months following collection, after which it is deleted while derived features and model weights, which cannot be reversed back into intelligible audio, are retained indefinitely. This retention policy was set in coordination with the legal team and differs slightly from the licensed broadcast archive data, which follows retention terms specified in the individual licensing agreements rather than the internal default.\n\n11.2 Regional Data Handling\n\nPunjabi data collected from sources indicating Pakistani origin and data",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 15,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        5,
+        6
+      ],
+      "section_headings": [],
+      "char_count": 1155,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "11.2 Regional Data Handling\n\nPunjabi data collected from sources indicating Pakistani origin and data indicating Indian origin are currently stored in the same pipeline but tagged separately, in anticipation of possible future regulatory requirements around crossborder data handling. No technical separation is currently enforced beyond this tagging, but the team has flagged this as a likely area of future work given increasing regulatory attention to speech data specifically, as opposed to text data, in the region.\n\n11.3 Rater Access Controls\n\nHuman raters involved in MOS evaluation and manual quality review access audio samples through a restricted internal tool rather than raw file access, and are contractually prohibited from retaining or exporting any sample they review. Rater accounts are audited quarterly against the current active rater roster to ensure access is revoked promptly when a rater's engagement ends.\n\n12. Team Ownership and Escalation\n\n12.1 Component Ownership\n\nIngestion and data pipeline components are owned by the data engineering subteam, while acoustic model",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 16,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        6
+      ],
+      "section_headings": [],
+      "char_count": 1096,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "Ingestion and data pipeline components are owned by the data engineering subteam, while acoustic model architecture and training are owned by the modeling subteam. The shared front end sits at the boundary between the two and changes to it require sign-off from both subteams, given the Q2 latency incident described in Section 9.2 where a modeling-driven change had unanticipated infrastructure consequences.\n\nInfrastructure and serving configuration, including the instance types and scaling policy referenced in Section 5.1, are owned by the platform reliability subteam, who are the primary responders for the latency and drift alerts described in Section 8.\n\n12.2 Escalation Path\n\nProduction incidents affecting live traffic should be escalated through the standard on-call rotation rather than directly to individual component owners, since the on-call engineer has the context to determine which subteam's involvement is needed and can page accordingly. Data quality issues discovered outside of an active incident, such as a mistagged batch found during routine review, should",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 17,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        6
+      ],
+      "section_headings": [],
+      "char_count": 1084,
+      "token_count": 200
+    }
+  },
+  {
+    "text": "issues discovered outside of an active incident, such as a mistagged batch found during routine review, should instead be filed through the data quality ticket queue rather than paged, unless the issue is already affecting production traffic.\n\nThis distinction has occasionally been a source of confusion for newer team members, since a data quality issue can escalate into a production incident if left unaddressed, as happened in the Q1 script misdetection case. When in doubt, engineers are encouraged to file both a ticket and a page rather than deliberate too long over which path is more appropriate.",
+    "metadata": {
+      "source_filename": "scanned_document.pdf",
+      "chunk_index": 18,
+      "chunking_strategy": "token",
+      "page_numbers": [
+        6
+      ],
+      "section_headings": [],
+      "char_count": 606,
+      "token_count": 114
+    }
+  }
+]

@@ -1,20 +1,17 @@
-# Virtual environment
+# Virtual environments
+venv/
 nlp_env/
-Day_2/nlp_env/
-
+*/nlp_env/
+**/venv/
+**/*_env/
 
 # Python cache
 __pycache__/
 *.pyc
 
-# VS Code settings
+# OS/editor junk
+.DS_Store
 .vscode/
 
-# Jupyter checkpoints
-.ipynb_checkpoints/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-.env
+node_modules/
+**/node_modules/
