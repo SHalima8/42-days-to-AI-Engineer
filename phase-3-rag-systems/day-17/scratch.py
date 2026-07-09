@@ -1,17 +1,4 @@
-from embeddings.embedder_factory import get_embedder
-from vector_stores.faiss_store import FaissStore
+from vector_stores.store_utils import chroma_list_collections, faiss_list_chunk_ids
 
-embedder = get_embedder("minilm")
-store = FaissStore(model_name="minilm")
-
-texts = ["The refund policy allows returns within 30 days.", "Our office is located in Rawalpindi."]
-embeddings = embedder.embed_docs(texts)
-ids = ["chunk_1", "chunk_2"]
-metadatas = [{"source": "test"}, {"source": "test"}]
-
-store.add_chunks(ids, embeddings, texts, metadatas)
-print("Count:", store.count())  # expect 2
-
-query_vec = embedder.embed_query("what is the refund window?")
-results = store.query(query_vec, top_k=2)
-print(results)
+print(chroma_list_collections(store))       # if using your chroma test store variable
+print(faiss_list_chunk_ids(faiss_store))    # if using your faiss test store variable
