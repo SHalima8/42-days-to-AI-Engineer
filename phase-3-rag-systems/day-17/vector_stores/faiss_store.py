@@ -1,0 +1,1 @@
+[('chunk_1', 'The refund policy allows returns within 30 days.', 0.4645214080810547), ('chunk_2', 'Our office is located in Rawalpindi.', 0.8558388948440552)]
