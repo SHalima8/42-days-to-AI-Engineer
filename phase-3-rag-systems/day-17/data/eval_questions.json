@@ -1,0 +1,22 @@
+[
+  {"query": "What languages are currently in production in the speech pipeline?", "relevant_chunk_ids": ["chunk_2"]},
+  {"query": "What are the three sources of audio data used for ingestion?", "relevant_chunk_ids": ["chunk_3"]},
+  {"query": "What percentage of crowd-sourced audio gets rejected during quality filtering, and why?", "relevant_chunk_ids": ["chunk_4"]},
+  {"query": "What scripts does Punjabi text data use during ingestion?", "relevant_chunk_ids": ["chunk_6"]},
+  {"query": "What metadata fields are required for every ingested utterance?", "relevant_chunk_ids": ["chunk_8"]},
+  {"query": "Why do all three languages share a single front-end feature extractor?", "relevant_chunk_ids": ["chunk_9"]},
+  {"query": "For which language has the shared front-end transfer worked least well, and why?", "relevant_chunk_ids": ["chunk_10"]},
+  {"query": "How is ASR performance measured, and how is TTS performance measured?", "relevant_chunk_ids": ["chunk_12"]},
+  {"query": "Which language currently shows the highest word error rate?", "relevant_chunk_ids": ["chunk_13"]},
+  {"query": "How many native-speaker raters are used per language for MOS evaluation?", "relevant_chunk_ids": ["chunk_15"]},
+  {"query": "What are the production latency targets for ASR and TTS?", "relevant_chunk_ids": ["chunk_17"]},
+  {"query": "What happens when the pipeline's confidence score falls below the configured threshold?", "relevant_chunk_ids": ["chunk_18"]},
+  {"query": "What is the main known issue with code-switching between Urdu and English?", "relevant_chunk_ids": ["chunk_19"]},
+  {"query": "Why are training splits done at the speaker level instead of the utterance level?", "relevant_chunk_ids": ["chunk_23"]},
+  {"query": "In what order are the languages fine-tuned, and why was this order chosen?", "relevant_chunk_ids": ["chunk_25"]},
+  {"query": "What augmentation techniques are used to address dialect and noise-condition gaps?", "relevant_chunk_ids": ["chunk_27"]},
+  {"query": "What caused the Q1 Punjabi script misdetection incident?", "relevant_chunk_ids": ["chunk_31"]},
+  {"query": "What caused the Q2 latency regression, and how was it resolved?", "relevant_chunk_ids": ["chunk_33"]},
+  {"query": "How long is raw audio retained before it is deleted?", "relevant_chunk_ids": ["chunk_37"]},
+  {"query": "What is the difference between escalating through on-call rotation versus the data quality ticket queue?", "relevant_chunk_ids": ["chunk_42"]}
+]
