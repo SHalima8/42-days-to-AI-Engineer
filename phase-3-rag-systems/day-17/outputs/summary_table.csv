@@ -1,0 +1,7 @@
+model,store,avg_precision_at_3,avg_latency_ms
+minilm,chroma,0.233,34.61
+minilm,faiss,0.25,27.86
+mpnet,chroma,0.3,128.07
+mpnet,faiss,0.3,122.13
+bge,chroma,0.283,653.0
+bge,faiss,0.283,705.28

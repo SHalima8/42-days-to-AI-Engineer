@@ -1,0 +1,121 @@
+model,store,query,retrieved_ids,relevant_ids,precision_at_3,latency_ms
+minilm,chroma,What languages are currently in production in the speech pipeline?,"chunk_0, chunk_16, chunk_12",chunk_2,0.0,81.22
+minilm,chroma,What are the three sources of audio data used for ingestion?,"chunk_3, chunk_36, chunk_8",chunk_3,0.333,31.97
+minilm,chroma,"What percentage of crowd-sourced audio gets rejected during quality filtering, and why?","chunk_4, chunk_3, chunk_36",chunk_4,0.333,31.49
+minilm,chroma,What scripts does Punjabi text data use during ingestion?,"chunk_31, chunk_21, chunk_38",chunk_6,0.0,26.42
+minilm,chroma,What metadata fields are required for every ingested utterance?,"chunk_7, chunk_5, chunk_36",chunk_8,0.0,34.35
+minilm,chroma,Why do all three languages share a single front-end feature extractor?,"chunk_9, chunk_11, chunk_33",chunk_9,0.333,48.15
+minilm,chroma,"For which language has the shared front-end transfer worked least well, and why?","chunk_11, chunk_33, chunk_9",chunk_10,0.0,31.33
+minilm,chroma,"How is ASR performance measured, and how is TTS performance measured?","chunk_17, chunk_27, chunk_12",chunk_12,0.333,35.14
+minilm,chroma,Which language currently shows the highest word error rate?,"chunk_14, chunk_12, chunk_28",chunk_13,0.0,27.7
+minilm,chroma,How many native-speaker raters are used per language for MOS evaluation?,"chunk_15, chunk_12, chunk_39",chunk_15,0.333,31.48
+minilm,chroma,What are the production latency targets for ASR and TTS?,"chunk_17, chunk_27, chunk_33",chunk_17,0.333,30.3
+minilm,chroma,What happens when the pipeline's confidence score falls below the configured threshold?,"chunk_18, chunk_16, chunk_28",chunk_18,0.333,31.31
+minilm,chroma,What is the main known issue with code-switching between Urdu and English?,"chunk_19, chunk_10, chunk_14",chunk_19,0.333,34.09
+minilm,chroma,Why are training splits done at the speaker level instead of the utterance level?,"chunk_23, chunk_24, chunk_11",chunk_23,0.333,31.78
+minilm,chroma,"In what order are the languages fine-tuned, and why was this order chosen?","chunk_25, chunk_11, chunk_13",chunk_25,0.333,34.31
+minilm,chroma,What augmentation techniques are used to address dialect and noise-condition gaps?,"chunk_26, chunk_24, chunk_27",chunk_27,0.333,34.96
+minilm,chroma,What caused the Q1 Punjabi script misdetection incident?,"chunk_31, chunk_21, chunk_20",chunk_31,0.333,26.36
+minilm,chroma,"What caused the Q2 latency regression, and how was it resolved?","chunk_17, chunk_32, chunk_40",chunk_33,0.0,29.55
+minilm,chroma,How long is raw audio retained before it is deleted?,"chunk_37, chunk_36, chunk_3",chunk_37,0.333,29.4
+minilm,chroma,What is the difference between escalating through on-call rotation versus the data quality ticket queue?,"chunk_42, chunk_44, chunk_43",chunk_42,0.333,30.99
+minilm,faiss,What languages are currently in production in the speech pipeline?,"chunk_1, chunk_0, chunk_2",chunk_2,0.333,29.61
+minilm,faiss,What are the three sources of audio data used for ingestion?,"chunk_3, chunk_36, chunk_8",chunk_3,0.333,33.63
+minilm,faiss,"What percentage of crowd-sourced audio gets rejected during quality filtering, and why?","chunk_4, chunk_3, chunk_36",chunk_4,0.333,29.44
+minilm,faiss,What scripts does Punjabi text data use during ingestion?,"chunk_31, chunk_21, chunk_38",chunk_6,0.0,22.31
+minilm,faiss,What metadata fields are required for every ingested utterance?,"chunk_7, chunk_5, chunk_36",chunk_8,0.0,23.53
+minilm,faiss,Why do all three languages share a single front-end feature extractor?,"chunk_9, chunk_11, chunk_33",chunk_9,0.333,29.48
+minilm,faiss,"For which language has the shared front-end transfer worked least well, and why?","chunk_11, chunk_33, chunk_9",chunk_10,0.0,28.44
+minilm,faiss,"How is ASR performance measured, and how is TTS performance measured?","chunk_17, chunk_27, chunk_12",chunk_12,0.333,26.13
+minilm,faiss,Which language currently shows the highest word error rate?,"chunk_14, chunk_12, chunk_28",chunk_13,0.0,16.48
+minilm,faiss,How many native-speaker raters are used per language for MOS evaluation?,"chunk_15, chunk_12, chunk_39",chunk_15,0.333,23.05
+minilm,faiss,What are the production latency targets for ASR and TTS?,"chunk_17, chunk_27, chunk_33",chunk_17,0.333,27.43
+minilm,faiss,What happens when the pipeline's confidence score falls below the configured threshold?,"chunk_18, chunk_16, chunk_28",chunk_18,0.333,26.53
+minilm,faiss,What is the main known issue with code-switching between Urdu and English?,"chunk_19, chunk_10, chunk_14",chunk_19,0.333,26.81
+minilm,faiss,Why are training splits done at the speaker level instead of the utterance level?,"chunk_23, chunk_24, chunk_11",chunk_23,0.333,26.29
+minilm,faiss,"In what order are the languages fine-tuned, and why was this order chosen?","chunk_25, chunk_11, chunk_13",chunk_25,0.333,27.29
+minilm,faiss,What augmentation techniques are used to address dialect and noise-condition gaps?,"chunk_26, chunk_24, chunk_27",chunk_27,0.333,27.49
+minilm,faiss,What caused the Q1 Punjabi script misdetection incident?,"chunk_31, chunk_21, chunk_20",chunk_31,0.333,29.24
+minilm,faiss,"What caused the Q2 latency regression, and how was it resolved?","chunk_17, chunk_32, chunk_40",chunk_33,0.0,33.42
+minilm,faiss,How long is raw audio retained before it is deleted?,"chunk_37, chunk_36, chunk_3",chunk_37,0.333,28.82
+minilm,faiss,What is the difference between escalating through on-call rotation versus the data quality ticket queue?,"chunk_42, chunk_44, chunk_43",chunk_42,0.333,41.85
+mpnet,chroma,What languages are currently in production in the speech pipeline?,"chunk_1, chunk_0, chunk_34",chunk_2,0.0,217.83
+mpnet,chroma,What are the three sources of audio data used for ingestion?,"chunk_3, chunk_36, chunk_8",chunk_3,0.333,148.39
+mpnet,chroma,"What percentage of crowd-sourced audio gets rejected during quality filtering, and why?","chunk_4, chunk_3, chunk_36",chunk_4,0.333,155.43
+mpnet,chroma,What scripts does Punjabi text data use during ingestion?,"chunk_8, chunk_31, chunk_6",chunk_6,0.333,104.0
+mpnet,chroma,What metadata fields are required for every ingested utterance?,"chunk_8, chunk_3, chunk_36",chunk_8,0.333,79.59
+mpnet,chroma,Why do all three languages share a single front-end feature extractor?,"chunk_9, chunk_25, chunk_33",chunk_9,0.333,139.64
+mpnet,chroma,"For which language has the shared front-end transfer worked least well, and why?","chunk_25, chunk_32, chunk_33",chunk_10,0.0,147.19
+mpnet,chroma,"How is ASR performance measured, and how is TTS performance measured?","chunk_12, chunk_27, chunk_17",chunk_12,0.333,124.5
+mpnet,chroma,Which language currently shows the highest word error rate?,"chunk_13, chunk_14, chunk_31",chunk_13,0.333,68.34
+mpnet,chroma,How many native-speaker raters are used per language for MOS evaluation?,"chunk_15, chunk_12, chunk_13",chunk_15,0.333,118.44
+mpnet,chroma,What are the production latency targets for ASR and TTS?,"chunk_17, chunk_27, chunk_16",chunk_17,0.333,119.99
+mpnet,chroma,What happens when the pipeline's confidence score falls below the configured threshold?,"chunk_18, chunk_29, chunk_16",chunk_18,0.333,111.54
+mpnet,chroma,What is the main known issue with code-switching between Urdu and English?,"chunk_19, chunk_20, chunk_31",chunk_19,0.333,123.84
+mpnet,chroma,Why are training splits done at the speaker level instead of the utterance level?,"chunk_23, chunk_24, chunk_11",chunk_23,0.333,118.49
+mpnet,chroma,"In what order are the languages fine-tuned, and why was this order chosen?","chunk_25, chunk_26, chunk_13",chunk_25,0.333,138.48
+mpnet,chroma,What augmentation techniques are used to address dialect and noise-condition gaps?,"chunk_26, chunk_27, chunk_22",chunk_27,0.333,148.68
+mpnet,chroma,What caused the Q1 Punjabi script misdetection incident?,"chunk_31, chunk_21, chunk_19",chunk_31,0.333,91.86
+mpnet,chroma,"What caused the Q2 latency regression, and how was it resolved?","chunk_32, chunk_17, chunk_33",chunk_33,0.333,149.77
+mpnet,chroma,How long is raw audio retained before it is deleted?,"chunk_37, chunk_3, chunk_4",chunk_37,0.333,99.28
+mpnet,chroma,What is the difference between escalating through on-call rotation versus the data quality ticket queue?,"chunk_42, chunk_43, chunk_44",chunk_42,0.333,156.09
+mpnet,faiss,What languages are currently in production in the speech pipeline?,"chunk_1, chunk_0, chunk_34",chunk_2,0.0,104.82
+mpnet,faiss,What are the three sources of audio data used for ingestion?,"chunk_3, chunk_36, chunk_8",chunk_3,0.333,127.6
+mpnet,faiss,"What percentage of crowd-sourced audio gets rejected during quality filtering, and why?","chunk_4, chunk_3, chunk_36",chunk_4,0.333,138.39
+mpnet,faiss,What scripts does Punjabi text data use during ingestion?,"chunk_8, chunk_31, chunk_6",chunk_6,0.333,92.04
+mpnet,faiss,What metadata fields are required for every ingested utterance?,"chunk_8, chunk_3, chunk_36",chunk_8,0.333,92.4
+mpnet,faiss,Why do all three languages share a single front-end feature extractor?,"chunk_9, chunk_25, chunk_33",chunk_9,0.333,142.56
+mpnet,faiss,"For which language has the shared front-end transfer worked least well, and why?","chunk_25, chunk_32, chunk_33",chunk_10,0.0,137.32
+mpnet,faiss,"How is ASR performance measured, and how is TTS performance measured?","chunk_12, chunk_27, chunk_17",chunk_12,0.333,141.72
+mpnet,faiss,Which language currently shows the highest word error rate?,"chunk_13, chunk_14, chunk_31",chunk_13,0.333,75.87
+mpnet,faiss,How many native-speaker raters are used per language for MOS evaluation?,"chunk_15, chunk_12, chunk_13",chunk_15,0.333,147.43
+mpnet,faiss,What are the production latency targets for ASR and TTS?,"chunk_17, chunk_27, chunk_16",chunk_17,0.333,149.98
+mpnet,faiss,What happens when the pipeline's confidence score falls below the configured threshold?,"chunk_18, chunk_29, chunk_16",chunk_18,0.333,144.08
+mpnet,faiss,What is the main known issue with code-switching between Urdu and English?,"chunk_19, chunk_20, chunk_31",chunk_19,0.333,135.08
+mpnet,faiss,Why are training splits done at the speaker level instead of the utterance level?,"chunk_23, chunk_24, chunk_11",chunk_23,0.333,137.56
+mpnet,faiss,"In what order are the languages fine-tuned, and why was this order chosen?","chunk_25, chunk_26, chunk_13",chunk_25,0.333,144.56
+mpnet,faiss,What augmentation techniques are used to address dialect and noise-condition gaps?,"chunk_26, chunk_27, chunk_22",chunk_27,0.333,126.98
+mpnet,faiss,What caused the Q1 Punjabi script misdetection incident?,"chunk_31, chunk_21, chunk_19",chunk_31,0.333,75.39
+mpnet,faiss,"What caused the Q2 latency regression, and how was it resolved?","chunk_32, chunk_17, chunk_33",chunk_33,0.333,125.83
+mpnet,faiss,How long is raw audio retained before it is deleted?,"chunk_37, chunk_3, chunk_4",chunk_37,0.333,68.81
+mpnet,faiss,What is the difference between escalating through on-call rotation versus the data quality ticket queue?,"chunk_42, chunk_43, chunk_44",chunk_42,0.333,134.25
+bge,chroma,What languages are currently in production in the speech pipeline?,"chunk_1, chunk_0, chunk_2",chunk_2,0.333,780.38
+bge,chroma,What are the three sources of audio data used for ingestion?,"chunk_3, chunk_40, chunk_36",chunk_3,0.333,502.82
+bge,chroma,"What percentage of crowd-sourced audio gets rejected during quality filtering, and why?","chunk_4, chunk_24, chunk_5",chunk_4,0.333,530.01
+bge,chroma,What scripts does Punjabi text data use during ingestion?,"chunk_31, chunk_21, chunk_8",chunk_6,0.0,475.9
+bge,chroma,What metadata fields are required for every ingested utterance?,"chunk_7, chunk_3, chunk_0",chunk_8,0.0,487.16
+bge,chroma,Why do all three languages share a single front-end feature extractor?,"chunk_9, chunk_33, chunk_11",chunk_9,0.333,495.24
+bge,chroma,"For which language has the shared front-end transfer worked least well, and why?","chunk_33, chunk_9, chunk_35",chunk_10,0.0,480.54
+bge,chroma,"How is ASR performance measured, and how is TTS performance measured?","chunk_12, chunk_27, chunk_17",chunk_12,0.333,475.99
+bge,chroma,Which language currently shows the highest word error rate?,"chunk_13, chunk_14, chunk_12",chunk_13,0.333,463.37
+bge,chroma,How many native-speaker raters are used per language for MOS evaluation?,"chunk_15, chunk_12, chunk_39",chunk_15,0.333,484.68
+bge,chroma,What are the production latency targets for ASR and TTS?,"chunk_17, chunk_27, chunk_33",chunk_17,0.333,443.21
+bge,chroma,What happens when the pipeline's confidence score falls below the configured threshold?,"chunk_18, chunk_28, chunk_29",chunk_18,0.333,648.3
+bge,chroma,What is the main known issue with code-switching between Urdu and English?,"chunk_19, chunk_20, chunk_14",chunk_19,0.333,975.75
+bge,chroma,Why are training splits done at the speaker level instead of the utterance level?,"chunk_23, chunk_24, chunk_11",chunk_23,0.333,881.55
+bge,chroma,"In what order are the languages fine-tuned, and why was this order chosen?","chunk_25, chunk_26, chunk_11",chunk_25,0.333,905.6
+bge,chroma,What augmentation techniques are used to address dialect and noise-condition gaps?,"chunk_26, chunk_27, chunk_5",chunk_27,0.333,855.16
+bge,chroma,What caused the Q1 Punjabi script misdetection incident?,"chunk_31, chunk_21, chunk_20",chunk_31,0.333,834.28
+bge,chroma,"What caused the Q2 latency regression, and how was it resolved?","chunk_33, chunk_17, chunk_28",chunk_33,0.333,789.86
+bge,chroma,How long is raw audio retained before it is deleted?,"chunk_37, chunk_36, chunk_5",chunk_37,0.333,749.95
+bge,chroma,What is the difference between escalating through on-call rotation versus the data quality ticket queue?,"chunk_42, chunk_44, chunk_41",chunk_42,0.333,800.19
+bge,faiss,What languages are currently in production in the speech pipeline?,"chunk_1, chunk_0, chunk_2",chunk_2,0.333,773.12
+bge,faiss,What are the three sources of audio data used for ingestion?,"chunk_3, chunk_40, chunk_36",chunk_3,0.333,814.59
+bge,faiss,"What percentage of crowd-sourced audio gets rejected during quality filtering, and why?","chunk_4, chunk_24, chunk_5",chunk_4,0.333,771.85
+bge,faiss,What scripts does Punjabi text data use during ingestion?,"chunk_31, chunk_21, chunk_8",chunk_6,0.0,764.68
+bge,faiss,What metadata fields are required for every ingested utterance?,"chunk_7, chunk_3, chunk_0",chunk_8,0.0,853.99
+bge,faiss,Why do all three languages share a single front-end feature extractor?,"chunk_9, chunk_33, chunk_11",chunk_9,0.333,725.16
+bge,faiss,"For which language has the shared front-end transfer worked least well, and why?","chunk_33, chunk_9, chunk_35",chunk_10,0.0,714.73
+bge,faiss,"How is ASR performance measured, and how is TTS performance measured?","chunk_12, chunk_27, chunk_17",chunk_12,0.333,463.73
+bge,faiss,Which language currently shows the highest word error rate?,"chunk_13, chunk_14, chunk_12",chunk_13,0.333,417.05
+bge,faiss,How many native-speaker raters are used per language for MOS evaluation?,"chunk_15, chunk_12, chunk_39",chunk_15,0.333,433.95
+bge,faiss,What are the production latency targets for ASR and TTS?,"chunk_17, chunk_27, chunk_33",chunk_17,0.333,474.97
+bge,faiss,What happens when the pipeline's confidence score falls below the configured threshold?,"chunk_18, chunk_28, chunk_29",chunk_18,0.333,449.52
+bge,faiss,What is the main known issue with code-switching between Urdu and English?,"chunk_19, chunk_20, chunk_14",chunk_19,0.333,438.48
+bge,faiss,Why are training splits done at the speaker level instead of the utterance level?,"chunk_23, chunk_24, chunk_11",chunk_23,0.333,448.48
+bge,faiss,"In what order are the languages fine-tuned, and why was this order chosen?","chunk_25, chunk_26, chunk_11",chunk_25,0.333,1228.37
+bge,faiss,What augmentation techniques are used to address dialect and noise-condition gaps?,"chunk_26, chunk_27, chunk_5",chunk_27,0.333,959.51
+bge,faiss,What caused the Q1 Punjabi script misdetection incident?,"chunk_31, chunk_21, chunk_20",chunk_31,0.333,894.86
+bge,faiss,"What caused the Q2 latency regression, and how was it resolved?","chunk_33, chunk_17, chunk_28",chunk_33,0.333,869.24
+bge,faiss,How long is raw audio retained before it is deleted?,"chunk_37, chunk_36, chunk_5",chunk_37,0.333,784.98
+bge,faiss,What is the difference between escalating through on-call rotation versus the data quality ticket queue?,"chunk_42, chunk_44, chunk_41",chunk_42,0.333,824.26
