@@ -1,5 +1,5 @@
 from embeddings.embedder_factory import get_embedder
-from vector_stores.chroma_store import faissStore
+from vector_stores.faiss_store import faissStore
 
 embedder = get_embedder("minilm")
 store = faissStore(model_name="minilm")
