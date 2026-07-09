@@ -2,7 +2,7 @@ from embeddings.embedder_factory import get_embedder
 from vector_stores.faiss_store import faissStore
 
 embedder = get_embedder("minilm")
-store = faissStore(model_name="minilm")
+store = FaissStore(model_name="minilm")
 
 texts = ["The refund policy allows returns within 30 days.", "Our office is located in Rawalpindi."]
 embeddings = embedder.embed_docs(texts)
