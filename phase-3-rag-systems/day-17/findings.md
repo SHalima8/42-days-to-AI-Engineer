@@ -1,4 +1,4 @@
-# day-17/embeddings/embedder_factory.py
+
 
 from sentence_transformers import SentenceTransformer
 
