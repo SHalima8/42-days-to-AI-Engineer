@@ -1,18 +1,51 @@
-(venv) D:\Planet Beyond\phase-3-rag-systems\day-17>python ingest_chroma.py
-Loaded 45 chunks from ../day-16/outputs/recursive_docx_text.json
+# day-17/ingest_faiss.py
 
---- Ingesting into ChromaDB using model: minilm ---
-Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-Loading weights: 100%|███████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 3990.07it/s]
-Batches: 100%|█████████████████████████████████████████████████████████████████████████| 2/2 [00:01<00:00,  1.26it/s]
-Done. Collection now has 45 chunks.
+import json
+from embeddings.embedder_factory import get_embedder
+from vector_stores.faiss_store import FaissStore
 
---- Ingesting into ChromaDB using model: mpnet ---
-Loading weights: 100%|███████████████████████████████████████████████████████████| 199/199 [00:00<00:00, 3044.81it/s]
-Batches: 100%|█████████████████████████████████████████████████████████████████████████| 2/2 [00:11<00:00,  5.65s/it]
-Done. Collection now has 45 chunks.
+CHUNKS_PATH = "../day-16/outputs/recursive_docx_text.json"
+MODELS_TO_RUN = ["minilm", "mpnet", "bge"]
 
---- Ingesting into ChromaDB using model: bge ---
-Loading weights: 100%|███████████████████████████████████████████████████████████| 391/391 [00:00<00:00, 2624.90it/s]
-Batches: 100%|█████████████████████████████████████████████████████████████████████████| 2/2 [00:32<00:00, 16.02s/it]
-Done. Collection now has 45 chunks.
+
+def load_chunks(path):
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def sanitize_metadata(raw_meta):
+    """Same sanitization as Chroma — keeps metadata consistent across both stores,
+    even though FAISS itself doesn't enforce type restrictions like Chroma does."""
+    clean = {}
+    for key, value in raw_meta.items():
+        if value is None:
+            clean[key] = ""
+        elif isinstance(value, list):
+            clean[key] = ", ".join(str(v) for v in value)
+        else:
+            clean[key] = value
+    return clean
+
+
+def ingest_for_model(model_name, chunks):
+    print(f"\n--- Ingesting into FAISS using model: {model_name} ---")
+    embedder = get_embedder(model_name)
+    store = FaissStore(model_name=model_name)
+
+    texts = [c["text"] for c in chunks]
+    ids = [f"chunk_{c['metadata']['chunk_index']}" for c in chunks]
+    metadatas = [sanitize_metadata(c["metadata"]) for c in chunks]
+
+    embeddings = embedder.embed_docs(texts)
+    store.add_chunks(ids, embeddings, texts, metadatas)
+    store.save()  # persist to disk — this step was missing/unclear in our earlier dummy test
+
+    print(f"Done. Index now has {store.count()} chunks.")
+
+
+if __name__ == "__main__":
+    chunks = load_chunks(CHUNKS_PATH)
+    print(f"Loaded {len(chunks)} chunks from {CHUNKS_PATH}")
+
+    for model_name in MODELS_TO_RUN:
+        ingest_for_model(model_name, chunks)
