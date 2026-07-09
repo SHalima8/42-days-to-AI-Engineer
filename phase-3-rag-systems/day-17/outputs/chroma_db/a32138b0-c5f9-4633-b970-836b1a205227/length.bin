@@ -1,0 +1,9 @@
+Speed and pitch perturbation within a range validated to preserve intelligibility
+
+Background noise injection sampled from a library of real-world recording environments
+
+Text-to-speech round-tripping for underrepresented dialect regions, used cautiously given the risk of reinforcing the TTS model's own biases back into the ASR training set
+
+8. Monitoring and Alerting
+
+8.1 Production Metricsÿÿÿÿÿÿ
