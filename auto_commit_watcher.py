@@ -16,13 +16,13 @@ class GitAutoCommitHandler(FileSystemEventHandler):
 
         now = time.time()
         if now - self.last_run < COOLDOWN_SECONDS:
-            return  # ignore duplicate/rapid-fire events
+            return
         self.last_run = now
 
         subprocess.run(["git", "add", "."], cwd=REPO_PATH)
-        result = subprocess.run(
+        subprocess.run(
             ["git", "commit", "-m", f"auto commit: {time.strftime('%Y-%m-%d %H:%M:%S')}"],
-            cwd=REPO_PATH, capture_output=True, text=True
+            cwd=REPO_PATH
         )
         subprocess.run(["git", "push"], cwd=REPO_PATH)
         print(f"✅ Committed and pushed at {time.strftime('%H:%M:%S')}")
