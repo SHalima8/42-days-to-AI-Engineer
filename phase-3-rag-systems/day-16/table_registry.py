@@ -41,6 +41,13 @@ import json
 from pathlib import Path
 from typing import Optional
 
+# Load .env into os.environ. Without this, GEMINI_API_KEY set in a .env
+# file is invisible to os.environ.get() below — this was silently causing
+# every table to fall back to raw markdown, with no error printed, because
+# the code never actually attempted the API call in the first place.
+from dotenv import load_dotenv
+load_dotenv()
+
 TABLES_LOOKUP_PATH = "data/extracted/tables_lookup.json"
 TABLES_SUMMARY_PATH = "data/extracted/tables_summary.md"
 
@@ -95,6 +102,9 @@ def summarize_table_with_llm(markdown_table: str) -> str:
     crash ingestion.
     """
     if not os.environ.get("GEMINI_API_KEY"):
+        print("[table_registry] GEMINI_API_KEY not found in environment "
+              "(check your .env file and that it's in the project root) — "
+              "using raw markdown table instead of an LLM summary.")
         return markdown_table
     try:
         from google import genai

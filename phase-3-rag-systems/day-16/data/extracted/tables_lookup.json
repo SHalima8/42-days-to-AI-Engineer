@@ -1,33 +1,5 @@
 [
   {
-    "table_id": "scanned_document_table_0000",
-    "caption": null,
-    "source_filename": "scanned_document.pdf",
-    "page_number": 2,
-    "section_heading": null
-  },
-  {
-    "table_id": "scanned_document_table_0001",
-    "caption": "Table 4.2",
-    "source_filename": "scanned_document.pdf",
-    "page_number": 2,
-    "section_heading": null
-  },
-  {
-    "table_id": "scanned_document_table_0002",
-    "caption": "Table 4.2",
-    "source_filename": "scanned_document.pdf",
-    "page_number": 3,
-    "section_heading": null
-  },
-  {
-    "table_id": "scanned_document_table_0003",
-    "caption": null,
-    "source_filename": "scanned_document.pdf",
-    "page_number": 3,
-    "section_heading": null
-  },
-  {
     "table_id": "multilingual_speech_pipeline_table_0000",
     "caption": "Table 4.1",
     "source_filename": "multilingual_speech_pipeline.docx",
@@ -110,5 +82,33 @@
     "source_filename": "growth.pdf",
     "page_number": 29,
     "section_heading": "23"
+  },
+  {
+    "table_id": "scanned_document_table_0000",
+    "caption": null,
+    "source_filename": "scanned_document.pdf",
+    "page_number": 2,
+    "section_heading": null
+  },
+  {
+    "table_id": "scanned_document_table_0001",
+    "caption": "Table 4.2",
+    "source_filename": "scanned_document.pdf",
+    "page_number": 2,
+    "section_heading": null
+  },
+  {
+    "table_id": "scanned_document_table_0002",
+    "caption": "Table 4.2",
+    "source_filename": "scanned_document.pdf",
+    "page_number": 3,
+    "section_heading": null
+  },
+  {
+    "table_id": "scanned_document_table_0003",
+    "caption": null,
+    "source_filename": "scanned_document.pdf",
+    "page_number": 3,
+    "section_heading": null
   }
 ]
