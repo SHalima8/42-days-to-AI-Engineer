@@ -10,6 +10,7 @@ LLM a useless string like "[Table 4.1 — see table registry, id: ...]".
 
 import sys
 import os
+import re
 import chromadb
 
 # Day 17's embedder_factory.py lives in its own folder, not this project —
@@ -19,7 +20,30 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "day-17", "e
 from embedder_factory import get_embedder  # noqa: E402
 
 from src import config
-from src.table_lookup import get_table_block
+from src.table_lookup import get_table_block, get_table_summary_only
+
+# Matches a leaked table placeholder wherever it appears, e.g.:
+# "[Table 4.2 — see table registry, id: multilingual_speech_pipeline_table_0001]"
+# Captures the table_id so it can be resolved even when it's stuck mid-paragraph
+# inside a chunk that was never tagged element_type="table" (Case 2 bug — the
+# Day 16 chunker sometimes merges a table pointer into surrounding text
+# instead of keeping it isolated).
+_PLACEHOLDER_PATTERN = re.compile(r"\[[^\[\]]*?id:\s*([\w\-]+)\]")
+
+
+def _resolve_leaked_placeholders(text: str) -> str:
+    """
+    Defensive patch, not a root-cause fix: scans ANY chunk's text (not just
+    ones already tagged element_type="table") for a stray placeholder and
+    swaps it for the real summary. Root cause is in Day 16 ingestion — this
+    just stops junk placeholder text from ever reaching the LLM regardless
+    of which chunk it hides in.
+    """
+    def _replace(match):
+        table_id = match.group(1)
+        return get_table_summary_only(table_id)
+
+    return _PLACEHOLDER_PATTERN.sub(_replace, text)
 
 _embedder = get_embedder(config.EMBEDDING_MODEL_NAME)
 _chroma_client = chromadb.PersistentClient(path=config.CHROMA_DB_PATH)
@@ -55,6 +79,11 @@ def retrieve(query: str, top_k: int = None) -> list[dict]:
 
         if element_type == "table" and meta.get("table_id"):
             text = get_table_block(meta["table_id"])
+        else:
+            # Defensive check: even a chunk tagged "paragraph" might have a
+            # table placeholder leaked into it (Case 2). Resolve it inline
+            # if found, otherwise this is a no-op.
+            text = _resolve_leaked_placeholders(text)
 
         chunks.append({
             "text": text,
@@ -69,7 +98,7 @@ def retrieve(query: str, top_k: int = None) -> list[dict]:
 
 
 if __name__ == "__main__":
-    test_query = "What GPU utilization percentage did the Sindhi model achieve last quarter?"
+    test_query = "What are the error types for Pashto?"
     for i, chunk in enumerate(retrieve(test_query), 1):
         print(f"\n[{i}] type={chunk['element_type']} confidence={chunk['confidence']} source={chunk['source']}")
         print(chunk["text"][:200], "...")
